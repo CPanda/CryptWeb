@@ -16,9 +16,9 @@ namespace CryptoWeb.Models
         public Vigenere(string inputDecrypted, string inputEncrypted, string inputKey)
         {
             key = inputKey;
-            encrypted = inputEncrypted;
-            decrypted = inputDecrypted;
-            processtext();
+            encrypted = Analysis.processtext(inputEncrypted);
+            decrypted = Analysis.processtext(inputDecrypted);
+            
             if (string.IsNullOrEmpty(encrypted))
             {
                 //run the encryption method
@@ -30,8 +30,26 @@ namespace CryptoWeb.Models
 
         }
 
-        public Dictionary<char, int> Dict => dict;
+        public void Encrypt()
+        {
+            int i = 0;
+            int ordnumber = 0;
+            int j = key.Length;
+            foreach (var c in decrypted)
+            {
+                if (i == j)
+                    i = 0;
+                ordnumber = (int) c + ((int) key[i] - 97);
+                if (ordnumber > 122)
+                    ordnumber -= 26;
+                encrypted += (char) ordnumber;
+                i += 1; 
+            }
 
+        }
+
+        //getters and setters for the encrypted text
+        public Dictionary<char, int> Dict => dict;
 
         public string encryptedText
         {
@@ -45,21 +63,7 @@ namespace CryptoWeb.Models
             set => decrypted = value;
         }
 
-        void processtext()
-        {
-            decrypted = decrypted.ToLower();
-            Regex rgx = new Regex("^a-zA-Z");
-            decrypted = rgx.Replace(decrypted, ""); 
-            Regex rgx2 = new Regex(@"r'\s+");
-            decrypted = rgx2.Replace(decrypted, "");
-        }
 
-        public void letterFreq()
-        {
-            dict = encrypted.Where(c => char.IsLetter(c)).GroupBy(c => c)
-                .ToDictionary(g => g.Key, g => g.Count());
-
-        }
         
         
     }
