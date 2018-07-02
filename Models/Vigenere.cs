@@ -1,17 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.AccessControl;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace CryptoWeb.Models
 {
     public class Vigenere
     {
-        private string encrypted;
-        private string decrypted;
-        private string key; 
+        //private string encrypted;
+        //private string decrypted;
+        //private string key; 
         private Dictionary<char, int> dict = new Dictionary<char, int>();
+
+        //[Key] 
+        public string key { get; set; }
+        public string encrypted { get; set;  }
+        public string decrypted { get; set; }
 
         public Vigenere(string inputDecrypted, string inputEncrypted, string inputKey)
         {
@@ -19,15 +27,32 @@ namespace CryptoWeb.Models
             encrypted = Analysis.processtext(inputEncrypted);
             decrypted = Analysis.processtext(inputDecrypted);
             
-            if (string.IsNullOrEmpty(encrypted))
+            if (string.IsNullOrEmpty(encrypted) && !string.IsNullOrEmpty(key))
             {
-                //run the encryption method
+               Encrypt(); 
             }
-            else if (string.IsNullOrEmpty(decrypted))
+            else if (string.IsNullOrEmpty(decrypted) && !string.IsNullOrEmpty(key))
             {
-                //run decryption method
+                Decrypt();
             }
 
+        }
+
+        public void Decrypt()
+        {
+            int i = 0;
+            int ordnumber = 0;
+            int j = key.Length;
+            foreach (var c in encrypted)
+            {
+                if (i == j)
+                    i = 0;
+                ordnumber = (int) c + ((int) key[i] - 97);
+                if (ordnumber < 97)
+                    ordnumber += 26;
+                decrypted += (char) ordnumber;
+                i += 1; 
+            }
         }
 
         public void Encrypt()
