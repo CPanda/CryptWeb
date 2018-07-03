@@ -2,6 +2,7 @@
  * This class contains some helper methods and analysis options for the cipher text. 
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,11 +19,10 @@ namespace CryptoWeb.Models
          */
         public static string processtext(string text)
         {
+            //convert to lower case
             text = text.ToLower();
-            Regex rgx = new Regex("^a-zA-Z");
-            text = rgx.Replace(text, ""); 
-            Regex rgx2 = new Regex(@"r'\s+");
-            text = rgx2.Replace(text, "");
+            //remove everythign except a-z. 
+            text = Regex.Replace(text, "[^a-z]", String.Empty); 
             return text; 
         }
 

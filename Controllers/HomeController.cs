@@ -13,20 +13,31 @@ namespace CryptoWeb.Controllers
         public IActionResult vigenere()
         {
             Vigenere vg = new Vigenere();
-            vg.encrypted = "Something is encrypted?";
-            vg.decrypted = "Something decrypted "; 
-            
             return View("vigenere", vg); 
         }
 
         [HttpPost]
         //create a new object on post, initialize, then add analysis options.. 
-        public IActionResult vigenere(Vigenere vg)
+        public IActionResult vg_encrypt(Vigenere vg)
         {
-            vg.encrypted = Request.Form["encrypted"];  
-            vg.decrypted = "hola";
+            vg.encrypted = "";
+            //vg.encrypted = Request.Form["encrypted"];
+            vg.decrypted = Request.Form["decrypted"]; 
+            vg.key = Request.Form["key"];
+            vg.processText();
             return View("vigenere", vg); 
         }
+
+        [HttpPost]
+        public IActionResult vg_decrypt(Vigenere vg)
+        {
+            vg.decrypted = "";
+            vg.encrypted = Request.Form["encrypted"];
+            vg.key = Request.Form["key"];
+            vg.processText();
+            return View("vigenere", vg);
+        }
+        
         public IActionResult Index()
         {
             return View();
