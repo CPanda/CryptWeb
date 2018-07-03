@@ -12,7 +12,20 @@ namespace CryptoWeb.Controllers
     {
         public IActionResult vigenere()
         {
-            return View(); 
+            Vigenere vg = new Vigenere();
+            vg.encrypted = "Something is encrypted?";
+            vg.decrypted = "Something decrypted "; 
+            
+            return View("vigenere", vg); 
+        }
+
+        [HttpPost]
+        //create a new object on post, initialize, then add analysis options.. 
+        public IActionResult vigenere(Vigenere vg)
+        {
+            vg.encrypted = Request.Form["encrypted"];  
+            vg.decrypted = "hola";
+            return View("vigenere", vg); 
         }
         public IActionResult Index()
         {

@@ -21,9 +21,12 @@ namespace CryptoWeb.Models
         public string encrypted { get; set;  }
         public string decrypted { get; set; }
 
-        public Vigenere(string inputDecrypted, string inputEncrypted, string inputKey)
+        public Vigenere(/*string inputDecrypted, string inputEncrypted, string inputKey*/ )
         {
-            key = inputKey;
+            key = " ";
+            encrypted = " ";
+            decrypted = " ";
+         /*   key = inputKey;
             encrypted = Analysis.processtext(inputEncrypted);
             decrypted = Analysis.processtext(inputDecrypted);
             
@@ -34,9 +37,9 @@ namespace CryptoWeb.Models
             else if (string.IsNullOrEmpty(decrypted) && !string.IsNullOrEmpty(key))
             {
                 Decrypt();
-            }
+            }*/
 
-        }
+        } 
 
         public void Decrypt()
         {

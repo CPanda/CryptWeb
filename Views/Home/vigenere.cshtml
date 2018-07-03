@@ -1,40 +1,67 @@
-﻿@model Vigenere
+﻿@using System.ComponentModel.DataAnnotations
+@using Microsoft.EntityFrameworkCore.Metadata
+@model Vigenere
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
 
-<div class="container">
-    <h3>Add Customer</h3>
+
+<h2>Vigenere Cipher</h2>
+
+    @using (Html.BeginForm("vigenere", "Home", FormMethod.Post))
+    {
+        //add more things, like if not null then show this etc. 
+        @Html.Raw("</br>")
+        @Html.Raw("</br>")
+        @Html.TextAreaFor(s=>s.encrypted, new {@class = "form-control", placeholder = "Enter Encrypted Text"})
+        //@Html.TextArea("encrypted", null, new {@class = "form-control", placeholder = "Enter Encrypted Text"});
+        @Html.Raw("</br>")
+       // Model.decryptedText = "John was here"; 
+       // Model.decrypted = Model.encrypted; 
+        Console.WriteLine(Model.decrypted);
+        //@Html.TextArea("decrypted", null, new {@class = "form-control", placeholder = "Enter Decrypted Text"});
+        @Html.TextAreaFor(s=>s.decrypted, new {@class = "form-control", placeholder = "Enter Encrypted Text"})
+        @Html.Raw("</br>")
+        @Html.TextBoxFor(s=>s.key, new {@class = "form-control", placeholder = "Key"});
+        @Html.Raw("</br>")
+        @Html.Raw(Model.encrypted);
+        @Html.TextBox(Model.encrypted); 
+        <input type="submit" value="Save" class="btn btn-primary" />
+        Html.EndForm();
+    }
+@{
+    /*<div class="container">
+    <h3></h3>
     <hr />
     <br />
     <form method="post">
         <div class="row">
             <div class="col-md-4">
-                <label asp-for="Vigenere.encrypted"></label>
-                <input asp-for="Vigenere.encrypted" class="form-control" />
-                <span class="alert-danger" asp-validation-for="Vigenere.encrypted"></span>
+                <label for="Vigenere.encrypted"></label>
+                <input for="Vigenere.encrypted" class="form-control" />
+                <span class="alert-danger" for="Vigenere.encrypted"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label asp-for="Vigenere.decrypted"></label>
-                <input asp-for="Vigenere.decrypted" class="form-control" />
-                <span class="alert-danger" asp-validation-for="Vigenere.decrypted"></span>
+                <label for="decrypted"></label>
+                <input for="Vigenere.decrypted" class="form-control" />
+                <span class="alert-danger" for="Vigenere.decrypted"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label asp-for="Vigenere.key"></label>
-                <input asp-for="Vigenere.key" class="form-control" />
-                <span class="alert-danger" asp-validation-for="Vigenere.key"></span>
+                <label for="Vigenere.key"></label>
+                <input for="Vigenere.key" class="form-control" />
+                <span class="alert-danger" for="Vigenere.key"></span>
             </div>
         </div>
         <br />
         <input type="submit" value="Save" class="btn btn-primary" />
         <a class="btn btn-default" href="/allcustomer">Cancel</a>
     </form>
-</div>
+</div>*/
+}
