@@ -37,6 +37,19 @@ namespace CryptoWeb.Controllers
             vg.processText();
             return View("vigenere", vg);
         }
+
+        public IActionResult Atbash()
+        {
+            Atbash at = new Atbash();
+            return View("Atbash", at);
+        }
+
+        [HttpPost]
+        public IActionResult at_encrypt(Atbash at)
+        {
+            at.encrypt(Request.Form["plaintext"]);
+            return View("Atbash", at);
+        }
         
         public IActionResult Index()
         {

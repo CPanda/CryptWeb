@@ -21,7 +21,7 @@ namespace CryptoWeb.Models
         {
             //convert to lower case
             text = text.ToLower();
-            //remove everythign except a-z. 
+            //remove everything except a-z. 
             text = Regex.Replace(text, "[^a-z]", String.Empty); 
             return text; 
         }

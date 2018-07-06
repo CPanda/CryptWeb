@@ -8,49 +8,46 @@
 }
 
 
-
 <h2>Vigenere Cipher</h2>
 
-    @using (Html.BeginForm("vg_encrypt", "Home", FormMethod.Post))
+@using (Html.BeginForm("vg_encrypt", "Home", FormMethod.Post))
+{
+    //add more things, like if not null then show this etc. 
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    @Html.TextArea("decrypted", null, new {@class = "form-control", placeholder = "Enter PlainText"})
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    @Html.TextBoxFor(s => s.key, new {@class = "form-control", placeholder = "Key"})
+    @Html.Raw("</br>")
+    <input type="submit" value="Encrypt" class="btn btn-primary"/>
+    if (!string.IsNullOrEmpty(Model.decrypted) && !string.IsNullOrEmpty(Model.key))
     {
-        //add more things, like if not null then show this etc. 
-        @Html.Raw("</br>")
-        @Html.Raw("</br>")
-        @Html.TextArea("decrypted", null, new {@class = "form-control", placeholder = "Enter PlainText"});
-        @Html.Raw("</br>")
-        @Html.Raw("</br>")
-        @Html.TextBoxFor(s=>s.key, new {@class = "form-control", placeholder = "Key"});
-        @Html.Raw("</br>")
-        <input type="submit" value="Encrypt" class="btn btn-primary"/>
-        if (!string.IsNullOrEmpty(Model.decrypted) && !string.IsNullOrEmpty(Model.key))
-        {
-            Model.Encrypt();
-            @Html.Raw(Model.encrypted+"</br>");
-        }
-            
-        Html.EndForm();
+        Model.Encrypt();
+        @Html.Raw(Model.encrypted + "</br>") 
     }
+
+    Html.EndForm();
+}
 
 @using (Html.BeginForm("vg_decrypt", "Home", FormMethod.Post))
 
-{     
-        //add more things, like if not null then show this etc. 
-        @Html.Raw("</br>")
-        @Html.Raw("</br>")
-        @Html.TextArea("encrypted", null, new {@class = "form-control", placeholder = "Enter Encrypted Text"});
-        @Html.Raw("</br>")
-        @Html.Raw("</br>")
-        @Html.TextBoxFor(s=>s.key, new {@class = "form-control", placeholder = "Key"});
-        @Html.Raw("</br>")
-        <input type="submit" value="Decrypt" class="btn btn-primary" />
-                                                                
-        if (!string.IsNullOrEmpty(Model.encrypted) && !string.IsNullOrEmpty(Model.key))
-        {
-            Model.Decrypt();
-            @Html.Raw(Model.decrypted);
-        }
-            
-        Html.EndForm();
-    
-    
+{
+    //add more things, like if not null then show this etc. 
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    @Html.TextArea("encrypted", null, new {@class = "form-control", placeholder = "Enter Encrypted Text"})
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    @Html.TextBoxFor(s => s.key, new {@class = "form-control", placeholder = "Key"})
+    @Html.Raw("</br>")
+    <input type="submit" value="Decrypt" class="btn btn-primary"/>
+
+    if (!string.IsNullOrEmpty(Model.encrypted) && !string.IsNullOrEmpty(Model.key))
+    {
+        Model.Decrypt();
+        @Html.Raw(Model.decrypted)
+    }
+
+    Html.EndForm();
 }
