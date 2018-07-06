@@ -50,6 +50,22 @@ namespace CryptoWeb.Controllers
             at.encrypt(Request.Form["plaintext"]);
             return View("Atbash", at);
         }
+
+        public IActionResult Analysis()
+        {
+           Analysis anl = new Analysis();
+           return View("Analysis", anl);
+        }
+
+        [HttpPost]
+        public IActionResult getChart(Analysis anl)
+        {
+            anl.encrypted = Request.Form["encrypted"];
+            anl.stringCounter();
+            ViewBag.values = anl.values;
+            ViewBag.keys = anl.keys;
+            return View("Analysis", anl); 
+        }
         
         public IActionResult Index()
         {

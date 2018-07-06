@@ -6,12 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CryptoWeb.Models
 {
     public class Analysis
     {
-        private string encryptedtext; 
+        public string encrypted { get; set; }
+
+        public Dictionary<char, int> dict { get; set; }
+        
+        public List<char> keys { get; set; }
+        public List<int> values { get; set;  }
         
         
         /**
@@ -30,11 +36,12 @@ namespace CryptoWeb.Models
          * Returns a dictionary containing the letter and the number of occurences of that letter.
          * 
          */
-        public static Dictionary<char, int> stringCounter(string text)
+        public void stringCounter()
         {
-            Dictionary<char, int> dict = text.Where(c => char.IsLetter(c)).GroupBy(c => c)
+            dict = encrypted.Where(c => char.IsLetter(c)).GroupBy(c => c)
                 .ToDictionary(g => g.Key, g => g.Count());
-            return dict; 
+            keys = dict.Select(kvp => kvp.Key).ToList();
+            values = dict.Select(kvp => kvp.Value).ToList();
 
         }
     }

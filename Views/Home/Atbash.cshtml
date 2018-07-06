@@ -10,13 +10,12 @@
 
 @using (Html.BeginForm("at_encrypt", "Home", FormMethod.Post))
 {
-    //add more things, like if not null then show this etc. 
     @Html.Raw("</br>")
     @Html.Raw("</br>")
-    @Html.TextArea("plaintext", null, new {@class = "form-control", placeholder = "Enter PlainText"})
+    @Html.TextArea("plaintext", null, new {@class = "form-control", placeholder = "Enter PlainText or Encrypted Text"})
     @Html.Raw("</br>")
     @Html.Raw("</br>")
-    <input type="submit" value="Encrypt" class="btn btn-primary"/>
+    <input type="submit" value="Encrypt/Decrypt" class="btn btn-primary"/>
     if (!string.IsNullOrEmpty(Model.encrypted))
     {
         @Html.Raw(Model.encrypted + "</br>") 

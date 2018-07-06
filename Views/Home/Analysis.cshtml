@@ -1,0 +1,74 @@
+﻿@using Newtonsoft.Json
+@model Analysis
+
+@{
+    ViewBag.Title = "Analysis";
+    Layout = "_Layout";
+}
+
+<h2>Cipher Analysis</h2>
+
+
+@using (Html.BeginForm("getChart", "Home", FormMethod.Post))
+{
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    @Html.TextArea("encrypted", null, new {@class = "form-control", placeholder = "Encrypted Text"})
+    @Html.Raw("</br>")
+    @Html.Raw("</br>")
+    <input type="submit" value="Graph Frequency" class="btn btn-primary"/>
+    if (!string.IsNullOrEmpty(Model.encrypted))
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+        <script>
+            var letters = @Html.Raw(JsonConvert.SerializeObject(ViewBag.keys));
+            var values = @Html.Raw(JsonConvert.SerializeObject(ViewBag.values));
+            var barChartData =
+            {
+                labels: letters, //the names displayed on the x-axis, see images below
+                datasets: [
+                    {
+                        label: 'Frequency Analysis Graph',
+                        backgroundColor: [
+                            "#f990a7",
+                            "#aad2ed",
+                            "#9966FF",
+                            "#99e5e5",
+                            "#f7bd83",
+                        ],
+                        borderWidth: 2,
+                        data: values
+                        //what you returned back from controller. values displayed on the y-axis, see images below
+                    }
+                ]
+            };
+
+            window.onload = function() {
+                var ctx1 = document.getElementById("barcanvas").getContext("2d");
+                window.myBar = new Chart(ctx1,
+                    {
+                        type: 'bar',
+                        data: barChartData,
+                        options:
+                        {
+                            title:
+                            {
+                                display: true,
+                                text: "Frequency Analysis Graph"
+                            },
+                            responsive: true,
+                            maintainAspectRatio: true
+                        }
+                    });
+            }
+        </script>
+        <div style="text-align: center">
+            <canvas id="barcanvas"></canvas>
+        </div>
+        <div style="text-align: center">
+            Frequency analysis of entered text. Using Chart.JS. Work in progress.
+        </div>
+    }
+
+    Html.EndForm();
+}
