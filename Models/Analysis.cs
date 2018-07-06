@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -14,7 +15,7 @@ namespace CryptoWeb.Models
     {
         public string encrypted { get; set; }
 
-        public Dictionary<char, int> dict { get; set; }
+        public ImmutableSortedDictionary<char, int> dict { get; set; }
         
         public List<char> keys { get; set; }
         public List<int> values { get; set;  }
@@ -38,10 +39,17 @@ namespace CryptoWeb.Models
          */
         public void stringCounter()
         {
+            encrypted = processtext(encrypted);
+            encrypted += "abcdefghijklmnopqrstuvwxyz";
+            
             dict = encrypted.Where(c => char.IsLetter(c)).GroupBy(c => c)
-                .ToDictionary(g => g.Key, g => g.Count());
+                .ToImmutableSortedDictionary(g => g.Key, g => g.Count());
             keys = dict.Select(kvp => kvp.Key).ToList();
             values = dict.Select(kvp => kvp.Value).ToList();
+            for(int i = 0; i<values.Count; ++i)
+            {
+                values[i] -= 1; 
+            }
 
         }
     }
