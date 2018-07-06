@@ -27,7 +27,7 @@ namespace CryptoWeb.Models
         }
 
         /**
-         * Returns a dictionary containing the letter and the number of occurances of that letter.
+         * Returns a dictionary containing the letter and the number of occurences of that letter.
          * 
          */
         public static Dictionary<char, int> stringCounter(string text)
